@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import csv
 import re
 import sys
@@ -7,9 +8,10 @@ import sys
 # Usage: python sparkasse.py infile outfile
 
 # File layout:
-# Sparkasse
+# _Sparkasse_
 # Auftragskonto, Buchungstag, Valutadatum, Buchungstext, Verwendungszweck, Beguenstigter/Zahlungspflichtiger, Kontonummer, BLZ, Betrag, Waehrung, Info
-# YNAB
+# =======
+# _YNAB_
 # Date,Payee,Category,Memo,Outflow,Inflow
 # 01/25/12,Sample Payee,,Sample Memo for an outflow,100.00,
 
@@ -64,5 +66,9 @@ def convertFile(inFileName, outFileName):
                 csvwriter.writerow(ynab_row)
 
 if __name__ == "__main__":
-    print "Converting from %s to %s" % (sys.argv[1], sys.argv[2])
-    convertFile(sys.argv[1], sys.argv[2])
+    if len(sys.argv) < 2:
+		print "Syntax: %s infile outfile" % (sys.argv[0])
+    else:
+		print "Converting from %s to %s" % (sys.argv[1], sys.argv[2])
+		convertFile(sys.argv[1], sys.argv[2])
+
