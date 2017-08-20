@@ -35,7 +35,7 @@ def convertToYNAB(row):
     waehrung = row[9]
     info = row[10]
 
-    ynab_date = valutadatum.replace('.', '/')
+    ynab_date = valutadatum.replace('.', '-')
     ynab_payee = beguenstigter_zahlungspflichtiger
     ynab_category = categorizeRow(auftragskonto, buchungstag, valutadatum, buchungstext, verwendungszweck, beguenstigter_zahlungspflichtiger, kontonummer, blz, betrag, waehrung, info)
     ynab_memo = str(verwendungszweck) + " " + str(buchungstext) +  " " + str(info)
@@ -46,7 +46,7 @@ def convertToYNAB(row):
     else:
         ynab_inflow = betrag
 
-    return [ynab_date, ynab_payee, ynab_category, ynab_memo, ynab_outflow, ynab_inflow, betrag]
+    return [ynab_date, ynab_payee, ynab_category, ynab_memo, ynab_outflow, ynab_inflow]
 
 def convertFile(inFileName, outFileName):
     firstLine = True
