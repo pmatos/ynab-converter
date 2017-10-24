@@ -29,17 +29,15 @@ def convertToYNAB(row):
     verwendungszweck = row[2]
     betrag = 0
     if row[5][-1] == '-':
-        betrag = -float(row[5][0:-1].replace(',', '.'))
+        betrag = -float(row[5][0:-1].replace(".", "").replace(',', '.'))
     else:
-        betrag = float(row[5][0:-1].replace(',', '.'))
-
-    print 'betrag: ' + str(betrag)
+        betrag = float(row[5][0:-1].replace(".", "").replace(',', '.'))
 
     ynab_date = valutadatum.replace('.', '/')
     #ynab_payee = beguenstigter_zahlungspflichtiger
     ynab_payee = str(verwendungszweck)
     ynab_category = categorizeRow(buchungstag, valutadatum, verwendungszweck, kartennummer, betrag)
-    ynab_memo = str(verwendungszweck)
+    ynab_memo = ""
     ynab_outflow = ""
     ynab_inflow = ""
     if betrag < 0:
@@ -62,7 +60,7 @@ def convertFile(inFileName, outFileName):
                 lineNum = lineNum + 1
                 if lineNum < 13:
                     continue
-                if len(row) != 6:
+                if len(row) != 7:
                     return
 
                 ynab_row = convertToYNAB(row)
@@ -74,4 +72,3 @@ if __name__ == "__main__":
     else:
 		print "Converting from %s to %s" % (sys.argv[1], sys.argv[2])
 		convertFile(sys.argv[1], sys.argv[2])
-
